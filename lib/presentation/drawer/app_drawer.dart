@@ -4,12 +4,11 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../navigator_action.dart';
+import '../../service_injection.dart';
 import '../layout/spacing.dart';
 import '../styles/app_colors.dart';
 import '../styles/app_text_styles.dart';
-import 'app_version_section.dart';
-import 'drawer_app_info.dart';
-import 'latest_scores.dart';
 import 'puzzle_size_settings.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -78,36 +77,56 @@ class AppDrawer extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
                           PuzzleSizeSettings(),
-                          LatestScores(),
+                          // LatestScores(),
+                          Padding(
+                            padding: EdgeInsetsGeometry.all(12),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                injection<NavigatorAction>().execute();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.all(0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  side: BorderSide(width: 1, color: Colors.white),
+                                ),
+                                minimumSize: Size.fromHeight(50),
+                              ),
+                              child: Text(
+                                'Exit',
+                                style: AppTextStyles.buttonSm.copyWith(color: Colors.white),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(
-                        left: drawerStartPadding,
-                        right: Spacing.md,
-                        top: Spacing.md,
-                        bottom: Spacing.md),
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      border: Border(
-                          top: BorderSide(color: Colors.white, width: 2)),
-                    ),
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppVersionSection(),
-                        SizedBox(height: 5),
-                        DrawerAppInfo(),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   padding: EdgeInsets.only(
+                  //       left: drawerStartPadding,
+                  //       right: Spacing.md,
+                  //       top: Spacing.md,
+                  //       bottom: Spacing.md),
+                  //   width: double.infinity,
+                  //   decoration: const BoxDecoration(
+                  //     border: Border(
+                  //         top: BorderSide(color: Colors.white, width: 2)),
+                  //   ),
+                  //   child: const Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       AppVersionSection(),
+                  //       SizedBox(height: 5),
+                  //       DrawerAppInfo(),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),
