@@ -5,6 +5,8 @@ import '../../models/tile.dart';
 import '../../providers/phrases_provider.dart';
 import '../../providers/puzzle_provider.dart';
 import '../../providers/stop_watch_provider.dart';
+import '../../service_injection.dart';
+import '../../set_score_action.dart';
 import '../common/animations/utils/animations_manager.dart';
 import '../layout/phrase_bubble_layout.dart';
 import '../puzzle/share-dialog/puzzle_share_dialog.dart';
@@ -49,6 +51,9 @@ class TileGestureDetector extends StatelessWidget {
       stopWatchProvider.start();
       phrasesProvider.setPhraseState(PhraseState.puzzleStarted);
     } else if (puzzleProvider.puzzle.isSolved) {
+
+      injection<SetScoreAction>().execute(puzzleProvider.movesCount);
+
       phrasesProvider.setPhraseState(PhraseState.puzzleSolved);
       Future.delayed(AnimationsManager.phraseBubbleTotalAnimationDuration, () {
         phrasesProvider.setPhraseState(PhraseState.none);
